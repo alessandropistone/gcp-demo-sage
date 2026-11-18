@@ -1,4 +1,4 @@
-variable "container_image" {
+﻿variable "container_image" {
   description = "Immagine iniziale del servizio. Le release successive le pubblica la pipeline deploy.yml."
   type        = string
   default     = "us-docker.pkg.dev/cloudrun/container/hello"
@@ -71,7 +71,7 @@ resource "google_cloud_run_v2_service" "sage_backend" {
     }
   }
 
-  # L'immagine reale è pubblicata dalla pipeline applicativa, non da Terraform.
+  # L'immagine reale Ã¨ pubblicata dalla pipeline applicativa, non da Terraform.
   lifecycle {
     ignore_changes = [
       template[0].containers[0].image,
@@ -86,7 +86,7 @@ resource "google_cloud_run_v2_service" "sage_backend" {
   ]
 }
 
-# Accesso pubblico (non autenticato): chiunque può invocare il servizio.
+# Accesso pubblico (non autenticato): chiunque puÃ² invocare il servizio.
 resource "google_cloud_run_v2_service_iam_member" "sage_public" {
   project  = var.project_id
   location = var.region
@@ -117,3 +117,4 @@ resource "google_project_iam_member" "sage_run_firestore" {
   role    = "roles/datastore.user"
   member  = "serviceAccount:${google_service_account.sage_run.email}"
 }
+

@@ -1,4 +1,4 @@
-"""Application settings, loaded from environment variables prefixed with SAGE_."""
+﻿"""Application settings, loaded from environment variables prefixed with SAGE_."""
 
 from functools import lru_cache
 
@@ -21,6 +21,10 @@ class AppConfig(BaseSettings):
     firestore_database: str = "(default)"
     firestore_collection: str = "chunks"
     top_k: int = 5
+
+    # Cloud Storage instructions
+    instructions_bucket: str = ""
+    instructions_blob: str = "istruzioni.md"
 
     # Vertex AI models
     chat_model: str = "gemini-2.5-flash"
@@ -45,6 +49,8 @@ class AppConfig(BaseSettings):
         self.firestore_database = self.resource_prefix
         # BigQuery dataset ids allow only letters, digits and underscores.
         self.bq_dataset = f"{self.resource_prefix.replace('-', '_')}_{self.bq_dataset}"
+        if not self.instructions_bucket:
+            self.instructions_bucket = f"{self.resource_prefix}-instructions"
         return self
 
 
